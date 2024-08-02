@@ -1,0 +1,24 @@
+Vivado Simulator 2018.2
+Time resolution is 1 ps
+Stopped at time : 1855 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1855000, Start: 1, DIN: 524, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 0001 
+Stopped at time : 1865 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1865000, Start: 1, DIN: e81, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 0010 
+Stopped at time : 1875 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1875000, Start: 1, DIN: 609, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 0100 
+Stopped at time : 1885 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1885000, Start: 1, DIN: 663, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 1000 
+Stopped at time : 1895 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1895000, Start: 1, DIN: b0d, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 0001 
+Stopped at time : 1905 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1905000, Start: 1, DIN: 98d, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 0010 
+Stopped at time : 1915 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1915000, Start: 1, DIN: 465, CS: 1111, MOSI: 0, Done: 1, SCLK: 1, Which Slave: 0100 
+Stopped at time : 1925 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1925000, Start: 1, DIN: 212, CS: 1111, MOSI: 0, Done: 1, SCLK: 0, Which Slave: 1000 
+Stopped at time : 1935 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1935000, Start: 1, DIN: 301, CS: 1111, MOSI: 0, Done: 1, SCLK: 0, Which Slave: 0001 
+Stopped at time : 1945 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1945000, Start: 1, DIN: d0d, CS: 1111, MOSI: 0, Done: 1, SCLK: 0, Which Slave: 0010 
+Stopped at time : 1955 ns : File "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" Line 50
+Time: 1955000, Start: 1, DIN: 176, CS: 1111, MOSI: 0, Done: 1, SCLK: 0, Which Slave: 0100 

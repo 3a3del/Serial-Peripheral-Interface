@@ -1,0 +1,4 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module spi
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module spi_tb

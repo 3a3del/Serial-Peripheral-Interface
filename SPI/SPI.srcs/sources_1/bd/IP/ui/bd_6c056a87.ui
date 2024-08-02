@@ -1,0 +1,23 @@
+{
+   ExpandedHierarchyInLayout: "",
+   guistr: "# # String gsaved with Nlview 6.8.5  2018-01-30 bk=1.4354 VDI=40 GEI=35 GUI=JA:1.6 non-TLS-threadsafe
+#  -string -flagsOSRD
+preplace port clk_0 -pg 1 -y 60 -defaultsOSRD
+preplace inst vio_0 -pg 1 -lvl 1 -y 110 -defaultsOSRD
+preplace inst spi_0 -pg 1 -lvl 2 -y 100 -defaultsOSRD
+preplace inst ila_0 -pg 1 -lvl 1 -y -50 -defaultsOSRD
+preplace netloc spi_0_cs 1 0 3 40J 250 NJ 250 940
+preplace netloc clk_0_1 1 0 2 20 220 550J
+preplace netloc spi_0_mosi 1 0 3 30J 270 NJ 270 950
+preplace netloc spi_0_done 1 0 3 50J 260 NJ 260 930
+preplace netloc vio_0_probe_out0 1 1 1 N
+preplace netloc vio_0_probe_out1 1 1 1 N
+preplace netloc vio_0_probe_out2 1 1 1 N
+preplace netloc spi_0_sclk 1 0 3 70J 230 NJ 230 910
+preplace netloc spi_0_bits_sent 1 0 3 60J 240 NJ 240 920
+levelinfo -pg 1 0 410 730 970 -top -120 -bot 410
+",
+}
+{
+   da_clkrst_cnt: "2",
+}
