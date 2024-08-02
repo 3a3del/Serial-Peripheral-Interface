@@ -1,0 +1,60 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/questasim64_10.6c/examples
+T_opt
+!s110 1722596488
+VS]neBbAdVB_ZXXG5m^VCb3
+04 6 4 work spi_tb fast 0
+=1-f430b9d4f94c-66acbc85-112-2cac
+o-quiet -auto_acc_if_foreign -work work
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.6c;65
+R0
+vspi
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 CPGb[BOGB>hQNCz1P0nF20
+I0TPHKaNSW=h6K1WM4`UKl3
+Z3 dC:/Users/hp/Desktop/Serial_Peripheral_Interface
+w1722596110
+8C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI.v
+FC:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI.v
+L0 3
+Z4 OL;L;10.6c;65
+!s108 1722596129.000000
+!s107 C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI.v|
+!i113 0
+Z5 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vspi_tb
+R2
+r1
+!s85 0
+31
+!i10b 1
+!s100 PQb]ghnSTK:V]BDHZ:6LK3
+I:1MI4hY3>li4PFdiW;heY2
+R3
+w1722597685
+8C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v
+FC:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v
+L0 3
+R4
+!s108 1722597691.000000
+!s107 C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|C:/Users/hp/Desktop/Serial_Peripheral_Interface/SPI_tb.v|
+!i113 0
+R5
+R1

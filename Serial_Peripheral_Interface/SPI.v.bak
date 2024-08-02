@@ -1,0 +1,245 @@
+`timescale 1ns / 1ps          //clock polarity      //clock phase
+module spi #(parameter N = 4, parameter cpol = 0, parameter cpha = 0)
+(
+input clk, //clk of the system
+input start,
+input [11:0] din,
+input [N-1 : 0] which_slave_enabled ,
+output reg [N-1 : 0] cs , //enable of the master to sent data to the slave in active low
+output reg [N-1 : 0] mosi , 
+output reg done, 
+output sclk //clk of the master
+);
+//Generate the clock of the master to be 100MHz
+integer count = 0;
+reg sclkt;
+generate
+if(cpol)
+reg sclkt = 1;
+else
+reg sclkt = 0;
+endgenerate
+
+always@(posedge clk)
+begin
+    if(count < 10)
+    count <= count + 1;
+    else
+    begin
+    count  <= 0;
+    sclkt  <= ~sclkt;
+    end
+end
+/////////////////////////////////////
+localparam idle = 0, start_tx = 1, send = 2, end_tx = 3; 
+reg [1:0] state = idle;
+reg [11:0] temp [N-1:0];
+integer bitcount = 0;
+
+generate
+if(!cpha) begin
+always@(posedge sclkt)
+begin
+            case(state)
+            idle: begin
+               mosi[0] <= 1'b0;
+               mosi[1] <= 1'b0;
+               mosi[2] <= 1'b0;
+               mosi[3] <= 1'b0;
+               cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+               cs[1]    <= 1'b1;
+               cs[2]    <= 1'b1;
+               cs[3]    <= 1'b1;
+               done <= 1'b0; // no data transmited
+               
+               if(start)
+                 state <= start_tx;
+               else
+                 state <= idle;
+            end
+            
+            
+            start_tx : begin
+              if(which_slave_enabled[0] & !which_slave_enabled[1] & !which_slave_enabled[2] & !which_slave_enabled[3] ) begin
+              mosi[0] <= 1'b1;
+              temp[0]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b0; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b1;
+               end
+              else if(!which_slave_enabled[0] & which_slave_enabled[1] & !which_slave_enabled[2] & !which_slave_enabled[3] ) begin
+              mosi[1] <= 1'b1;
+              temp[1]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b0;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b1;
+               end
+              else if(!which_slave_enabled[0] & !which_slave_enabled[1] & which_slave_enabled[2] & !which_slave_enabled[3] ) begin
+              mosi[2] <= 1'b1;
+              temp[2]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b0;
+              cs[3]    <= 1'b1;
+               end
+              else if(!which_slave_enabled[0] & !which_slave_enabled[1] & !which_slave_enabled[2] & which_slave_enabled[3] ) begin
+              mosi[3] <= 1'b1;
+              temp[3]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b0;
+               end
+              state <= send; // start to send the data in send state
+            end
+            
+            send : 
+            begin
+               if(bitcount <= 11)  //do you finish sent the 12 bit to the master ?
+               begin
+                 bitcount <= bitcount + 1;
+              if(mosi[0] & !mosi[1] & !mosi[2] & !mosi[3] ) begin
+                 mosi[0]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+              else if(!mosi[0] & mosi[1] & !mosi[2] & !mosi[3]) begin
+                 mosi[1]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+              else if(!mosi[0] & !mosi[1] & mosi[2] & !mosi[3] ) begin
+                 mosi[2]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+              else if(!mosi[0] & !mosi[1] & !mosi[2] & mosi[3] ) begin
+                 mosi[3]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+                 state    <= send;
+               end
+               else
+                begin
+                bitcount <= 0;
+                state    <= end_tx;
+               mosi[0] <= 1'b0;
+               mosi[1] <= 1'b0;
+               mosi[2] <= 1'b0;
+               mosi[3] <= 1'b0;
+                end
+            end
+            
+            end_tx : begin
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b1;
+               state <= idle;
+               done  <= 1'b1;
+            end
+            
+            default : state <= idle;
+            endcase
+end
+end
+else begin
+always@(negedge sclkt)
+begin
+            case(state)
+            idle: begin
+               mosi[0] <= 1'b0;
+               mosi[1] <= 1'b0;
+               mosi[2] <= 1'b0;
+               mosi[3] <= 1'b0;
+               cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+               cs[1]    <= 1'b1;
+               cs[2]    <= 1'b1;
+               cs[3]    <= 1'b1;
+               done <= 1'b0; // no data transmited
+               
+               if(start)
+                 state <= start_tx;
+               else
+                 state <= idle;
+            end
+            
+            start_tx : begin
+              if(which_slave_enabled[0] & !which_slave_enabled[1] & !which_slave_enabled[2] & !which_slave_enabled[3] ) begin
+              mosi[0] <= 1'b1;
+              temp[0]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b0; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b1;
+               end
+              else if(!which_slave_enabled[0] & which_slave_enabled[1] & !which_slave_enabled[2] & !which_slave_enabled[3] ) begin
+              mosi[1] <= 1'b1;
+              temp[1]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b0;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b1;
+               end
+              else if(!which_slave_enabled[0] & !which_slave_enabled[1] & which_slave_enabled[2] & !which_slave_enabled[3] ) begin
+              mosi[2] <= 1'b1;
+              temp[2]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b0;
+              cs[3]    <= 1'b1;
+               end
+              else if(!which_slave_enabled[0] & !which_slave_enabled[1] & !which_slave_enabled[2] & which_slave_enabled[3] ) begin
+              mosi[3] <= 1'b1;
+              temp[3]  <= din;  // data input within the master to send to the slave
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b0;
+               end
+              state <= send; // start to send the data in send state
+            end
+            
+            send : 
+            begin
+               if(bitcount <= 11)  //do you finish sent the 12 bit to the master ?
+               begin
+                 bitcount <= bitcount + 1;
+              if(mosi[0] & !mosi[1] & !mosi[2] & !mosi[3] ) begin
+                 mosi[0]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+              else if(!mosi[0] & mosi[1] & !mosi[2] & !mosi[3]) begin
+                 mosi[1]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+              else if(!mosi[0] & !mosi[1] & mosi[2] & !mosi[3] ) begin
+                 mosi[2]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+              else if(!mosi[0] & !mosi[1] & !mosi[2] & mosi[3] ) begin
+                 mosi[3]     <= temp[bitcount]; //bit by bit is sent in pos edge clock
+                 end
+                 state    <= send;
+               end
+               else
+                begin
+                bitcount <= 0;
+                state    <= end_tx;
+               mosi[0] <= 1'b0;
+               mosi[1] <= 1'b0;
+               mosi[2] <= 1'b0;
+               mosi[3] <= 1'b0;
+                end
+            end
+            
+            end_tx : begin
+              cs[0]    <= 1'b1; // active low in start case so ready to send data to the slave
+              cs[1]    <= 1'b1;
+              cs[2]    <= 1'b1;
+              cs[3]    <= 1'b1;
+               state <= idle;
+               done  <= 1'b1;
+            end
+            
+            default : state <= idle;
+            endcase
+end
+end
+endgenerate
+
+assign sclk = sclkt;
+
+endmodule
